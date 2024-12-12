@@ -1,21 +1,23 @@
-# Starts from the python 3.10 official docker image
-FROM python:3.10
+# Use the official Python image from Docker Hub as a base image
+FROM python:3.13
 
-# Create a folder "app" at the root of the image
-RUN mkdir /app
-
-# Define /app as the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy all the files in the current directory in /app
-COPY . /app
+# Copy the requirements.txt file into the container
+COPY requirements.txt .
 
-# Update pip
-RUN pip install --upgrade pip
+# Install the Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install dependencies from "requirements.txt"
-RUN pip install -r requirements.txt
+# Copy the rest of your project files into the container
+COPY . .
 
-# Run the app
-# Set host to 0.0.0.0 to make it run on the container's network
-CMD uvicorn app:app --host 0.0.0.0
+# Expose the port that Streamlit will run on
+EXPOSE 8501
+
+# Set the environment variable for Streamlit to run without any browser
+ENV STREAMLIT_SERVER_HEADLESS=true
+
+# Set the command to run your Streamlit app
+CMD ["streamlit", "run", "app.py"]
