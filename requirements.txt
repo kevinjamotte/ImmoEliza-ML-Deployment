@@ -1,6 +1,5 @@
 setuptools>=65.5.1
 wheel
-pandas==2.0.3    # Specify the exact version (or omit version for latest)
-streamlit==1.25.0  # Include streamlit if you are using it
-numpy==1.25.0      # If needed for numerical computations
-scikit-learn==1.3.1  # If you're using machine learning models
+pandas==2.1.0  # Updated to a newer version
+numpy==1.26.0  # Updated to a version compatible with Python 3.12
+streamlit==1.25.0
