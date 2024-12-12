@@ -4,6 +4,9 @@ FROM python:3.13
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install distutils (which is required by setuptools)
+RUN apt-get update && apt-get install -y python3-distutils
+
 # Copy the requirements.txt file into the container
 COPY requirements.txt .
 
@@ -15,9 +18,6 @@ COPY . .
 
 # Expose the port that Streamlit will run on
 EXPOSE 8501
-
-# Set the environment variable for Streamlit to run without any browser
-ENV STREAMLIT_SERVER_HEADLESS=true
 
 # Set the command to run your Streamlit app
 CMD ["streamlit", "run", "app.py"]
