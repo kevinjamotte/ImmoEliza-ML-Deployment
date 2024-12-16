@@ -36,30 +36,6 @@ def main():
     st.title("ImmoEliza ML Deployment")
     st.write("Predict property prices using our model.")
     st.sidebar.header("Input Features")
-    zip_code = st.sidebar.selectbox(
-        "Enter or select a postcode:", options=income_df["zipCode"]
-    )
-    if zip_code in income_df["zipCode"].values:
-        avg_income = income_df.loc[
-            income_df["zipCode"] == zip_code, "Average_Income_Per_Citizen"
-        ].values[0]
-    bedrooms = st.sidebar.number_input(
-        "Number of Bedrooms", min_value=0, max_value=10, value=3
-    )
-    kitchen = st.sidebar.selectbox("Equipped Kitchen?", ["Yes", "No"])
-    livingarea = st.sidebar.number_input("Living Area (m²)", min_value=0.0, value=100.0)
-    terrace = st.sidebar.selectbox("Has terrace?", ["Yes", "No"])
-    garden = st.sidebar.selectbox("Has garden?", ["Yes", "No"])
-    if garden == "Yes":
-        gardensurface = st.sidebar.number_input(
-            "Garden Surface (m²)", min_value=0.0, value=50.0
-        )
-    else:
-        gardensurface = 0
-    facades = st.sidebar.number_input(
-        "Number of Facades", min_value=1, max_value=4, value=2
-    )
-
     type_prop = st.sidebar.selectbox("Type of property", ["House", "Apartment"])
     state_build = st.sidebar.selectbox(
         "State of building",
@@ -72,7 +48,13 @@ def main():
             "To restore",
         ],
     )
-
+    zip_code = st.sidebar.selectbox(
+        "Enter or select a postcode:", options=income_df["zipCode"]
+    )
+    if zip_code in income_df["zipCode"].values:
+        avg_income = income_df.loc[
+            income_df["zipCode"] == zip_code, "Average_Income_Per_Citizen"
+        ].values[0]
     province = st.sidebar.selectbox(
         "Province",
         [
@@ -89,6 +71,23 @@ def main():
             "West-Vlaanderen",
         ],
     )
+    livingarea = st.sidebar.number_input("Living Area (m²)", min_value=0.0, value=100.0)
+    bedrooms = st.sidebar.number_input(
+        "Number of Bedrooms", min_value=0, max_value=10, value=3
+    )
+    kitchen = st.sidebar.selectbox("Equipped Kitchen?", ["Yes", "No"])
+    facades = st.sidebar.number_input(
+        "Number of Facades", min_value=1, max_value=4, value=2
+    )
+
+    terrace = st.sidebar.selectbox("Has terrace?", ["Yes", "No"])
+    garden = st.sidebar.selectbox("Has garden?", ["Yes", "No"])
+    if garden == "Yes":
+        gardensurface = st.sidebar.number_input(
+            "Garden Surface (m²)", min_value=0.0, value=50.0
+        )
+    else:
+        gardensurface = 0
 
     # Initialize all features with defaults
     input_data = {
