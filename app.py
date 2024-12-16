@@ -34,15 +34,15 @@ def load_income_data():
 def main():
     income_df = load_income_data()
     st.title("ImmoEliza ML Deployment")
-    st.write("Predict property prices using our model.")
-    st.sidebar.header("Input Features")
+    st.write("A machine learning model, 'Random Forest,' designed to predict the retail price of real estate properties.")
+    st.sidebar.header("Input Parameters")
     type_prop = st.sidebar.selectbox("Type of property", ["House", "Apartment"])
     state_build = st.sidebar.selectbox(
         "State of building",
         [
-            "As New",
             "Good",
             "Just renovated",
+            "As New",
             "To be done up",
             "To renovate",
             "To restore",
