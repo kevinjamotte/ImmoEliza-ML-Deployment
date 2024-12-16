@@ -55,22 +55,36 @@ def main():
         avg_income = income_df.loc[
             income_df["zipCode"] == zip_code, "Average_Income_Per_Citizen"
         ].values[0]
-    province = st.sidebar.selectbox(
-        "Province",
-        [
-            "Brussel",
-            "Luik",
-            "Namen",
-            "Antwerpen",
-            "Henegouwen",
-            "Limburg",
-            "Luxemburg",
-            "Oost-Vlaanderen",
-            "Vlaams-Brabant",
-            "Waals-Brabant",
-            "West-Vlaanderen",
-        ],
-    )
+    
+    if 1000 <= zip_code <= 1299:
+        province = "Brussel"
+    elif 1300 <= zip_code <= 1499:
+        province = "Waals-Brabant"
+    elif 1500 <= zip_code <= 1999:
+        province = "Vlaams-Brabant"
+    elif 2000 <= zip_code <= 2999:
+        province = "Antwerpen"
+    elif 3000 <= zip_code <= 3499:
+        province = "Vlaams-Brabant"
+    elif 3500 <= zip_code <= 3999:
+        province = "Limburg"
+    elif 4000 <= zip_code <= 4999:
+        province = "Luik"
+    elif 5000 <= zip_code <= 5680:
+        province = "Namen"
+    elif 6000 <= zip_code <= 6599:
+        province = "Henegouwen"
+    elif 6600 <= zip_code <= 6999:
+        province = "Luxemburg"
+    elif 7000 <= zip_code <= 7999:
+        province = "Henegouwen"
+    elif 8000 <= zip_code <= 8999:
+        province = "West-Vlaanderen"
+    elif 9000 <= zip_code <= 9999:
+        province = "Oost-Vlaanderen"
+    
+    st.write(province)
+
     livingarea = st.sidebar.number_input("Living Area (m²)", min_value=0.0, value=100.0)
     bedrooms = st.sidebar.number_input(
         "Number of Bedrooms", min_value=0, max_value=10, value=3
@@ -126,6 +140,7 @@ def main():
     # Update input data with user inputs
     input_data.update(
         {
+            f"province_{province}" : 1,
             "bedrooms": bedrooms,
             "is_house": 1 if type_prop == "House" else 0,
             "is_apartment": 1 if type_prop == "Apartment" else 0,
@@ -135,7 +150,6 @@ def main():
             "facades": facades,
             "Average_Income_Per_Citizen": avg_income,
             "gardensurface": gardensurface,
-            "province_" + province: 1,
             "as_new": 1 if state_build == "As New" else 0,
             "good": 1 if state_build == "Good" else 0,
             "just_renovated": 1 if state_build == "Just renovated" else 0,
@@ -144,6 +158,8 @@ def main():
             "to_restore": 1 if state_build == "To restore" else 0,
         }
     )
+
+
 
     # Convert input to DataFrame
     input_df = pd.DataFrame([input_data])
