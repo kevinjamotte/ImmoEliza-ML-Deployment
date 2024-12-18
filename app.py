@@ -6,7 +6,7 @@ from predict.prediction import predict
 
 
 # Load the model
-@st.cache_resource
+@st.cache_resource  
 def load_model():
     model_path = "models/random_forest.pkl"  # Adjust path as needed
     try:
@@ -21,9 +21,11 @@ def load_model():
 # Load the income DataFrame
 @st.cache_resource
 def load_income_data():
-    income_path = r"cleaned_income_data.csv"  # Ensure the correct path to your CSV file
+    income_path = r"cleaned_income_data.csv"
     try:
         income_df = pd.read_csv(income_path)
+        income_df = income_df[income_df["zipCode"] != 0]
+        income_df = income_df.sort_values(by="zipCode", ascending=True)
         return income_df
     except FileNotFoundError:
         st.error("Income data file not found. Please ensure the file path is correct.")
@@ -48,6 +50,7 @@ def main():
             "To restore",
         ],
     )
+    
     zip_code = st.sidebar.selectbox(
         "Enter or select a postcode:", options=income_df["zipCode"]
     )
@@ -82,6 +85,8 @@ def main():
         province = "West-Vlaanderen"
     elif 9000 <= zip_code <= 9999:
         province = "Oost-Vlaanderen"
+    else:
+        province = None
     
     st.write(province)
 
