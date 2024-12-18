@@ -37,6 +37,9 @@ def main():
     income_df = load_income_data()
     with st.form(key="input_form"):
         # Inputs inside the form
+        st.image('logo.png')
+        st.write('Your smart real-estate price predictor Ai-based tool')
+        st.write('Fill in the following fields, and we make the magic happen!')
         type_prop = st.selectbox("Type of property", ["House", "Apartment"])
         state_build = st.selectbox(
             "State of building",
@@ -184,8 +187,9 @@ def main():
             try:
                 prediction = predict(model, preprocessed_data)
                 if prediction is not None:
-                    st.write(f"Predicted Price based on the informations: €{prediction[0]:,.2f}")
-                    st.write(f"We recommend a price between €{round(prediction[0] * 0.95 / 1000) * 1000:,.2f} and €{round(prediction[0] * 1.05 / 1000) * 1000:,.2f}")
+                    st.write(f"Predicted price based on your informations: {prediction[0]:,.2f}€")
+                    st.write(f"We recommend a price between {round(prediction[0] * 0.95 / 1000) * 1000:,}€ and {round(prediction[0] * 1.05 / 1000) * 1000:,}€")
+
 
                 else:
                     st.error("An error occurred during prediction.")
